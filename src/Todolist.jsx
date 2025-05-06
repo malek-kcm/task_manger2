@@ -10,9 +10,9 @@ import {
 } from "lucide-react";
 import { Todos } from "./ContextTodo";
 import Todo from "./Todo";
-import { useContext, useState } from "react";
+import { useContext, useState , useEffect} from "react";
 import { v4 as id } from 'uuid';
-
+import { useTranslation } from 'react-i18next';
 export default function Todolist() {
   const { Tododata , setTododata} = useContext(Todos);
   const [showForm, setShowForm] = useState(false);
@@ -22,7 +22,7 @@ const [edit, setedit] = useState(false);
   const [showdelete, setshowdelete] = useState(false);
 const [idtodelete, setidtodelte] = useState("");
 
-
+const [language,setlanguage]=useState('fr')
   
   function show() {
     return Tododata.map((t) => (
@@ -82,6 +82,10 @@ setTododata(newdata)
 setidtodelte("")
 setshowdelete(false)
 }
+ const { t, i18n } = useTranslation();
+useEffect(() => {
+  i18n.changeLanguage(language);
+}, [language]);
   return (
     <div className="flex h-screen w-full bg-gradient-to-tr from-indigo-100 via-white to-blue-100">
       {/* Sidebar */}
@@ -94,15 +98,15 @@ setshowdelete(false)
           <nav className="w-full space-y-3">
             <button className="flex items-center w-full gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors text-white">
               <House className="w-5 h-5" />
-              <span>Accueil</span>
+              <span>{t('HOME')}</span>
             </button>
             <button className="flex items-center w-full gap-3 px-4 py-3 rounded-lg bg-gray-700 text-white font-medium">
               <LayoutList className="w-5 h-5" />
-              <span>Tâches</span>
+              <span>{t('tache')}</span>
             </button>
             <button className="flex items-center w-full gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors text-white">
               <Settings className="w-5 h-5" />
-              <span>Paramètres</span>
+              <span>{t('parametre')}</span>
             </button>
           </nav>
         </div>
@@ -110,7 +114,13 @@ setshowdelete(false)
         <div className="bg-gray-900 p-4 text-white text-sm text-center">
           <div className="flex items-center justify-between">
             <span className="text-lg font-medium">22°C</span>
-            <span className="text-gray-400">Ensoleillé</span>
+           <select
+           onChange={(e)=>setlanguage(e.target.value)}
+      className="bg-gray-800 text-white text-sm px-2 py-1 rounded"
+    >
+      <option value="fr">FR</option>
+      <option value="en">EN</option>
+    </select>
           </div>
         </div>
       </div>
@@ -128,16 +138,16 @@ setshowdelete(false)
 
           <div className="relative z-10 h-full flex flex-col justify-center items-center text-white px-8">
             <h1 className="text-4xl font-bold mb-2 drop-shadow-lg">
-             Today's Task's
+             {t('tache_dujour')}
             </h1>
 
             <div className="flex gap-8 mt-4">
               <button className="flex gap-2 hover:text-indigo-300 transition-colors">
                 <ArrowLeft className="w-5 h-5" />
-                <span>yesterday</span>
+                <span>{t('hier')}</span>
               </button>
               <button className="flex gap-2 hover:text-indigo-300 transition-colors">
-                <span>tomorrow </span>
+                <span>{t('demain')} </span>
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
@@ -163,7 +173,7 @@ setshowdelete(false)
           </div>
         </div>
 
-        {/* Overlay du formulaire */}
+        {/* formulaire */}
         {showForm  &&  (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20 backdrop-blur-sm">
             <div className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-2xl w-full max-w-xl relative border border-white/30">
@@ -175,14 +185,14 @@ setshowdelete(false)
               </button>
 
               <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
-                {edit ? "modify your task" :"add your nex task" }
+                {edit ? t('modifier-task') :t('add-task') }
               </h2>
               <form className="space-y-4">
                 <input
                   type="text"
                   value={valeur}
                   onChange={(e)=>setvaleur(e.target.value)}
-                  placeholder="Écris ta tâche ici..."
+                  placeholder="..."
                   className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 />
                 <button
@@ -190,7 +200,7 @@ setshowdelete(false)
                   onClick={Add}
                   className="w-full py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-all"
                 >
-                {edit ? "modify" :"add" }
+                {edit ? t("modify") :t("add") }
                 </button>
               </form>
             </div>
@@ -204,11 +214,11 @@ setshowdelete(false)
  <button onClick={()=> setshowdelete(false)} className=" flex justify-end w-full hover:text-red-500 transition">
   <X className="w-6 h-6" />
  </button>
- <h5 className="font-bold text-xl text-center text-red-600 ">atention !</h5>
- <p className="text-center my-2">are you sure you want to delete this task </p>
+ <h5 className="font-bold text-xl text-center text-red-600 ">{t('attention')}</h5>
+ <p className="text-center my-2">{t('sure_delete')} </p>
 <div className="flex items-center justify-center"  >
- <button onClick={handeldelete} type="submit" className="bg-indigo-600 p-2 font-semibold text-white rounded-lg hover:bg-indigo-700 transition-all mr-2 ">yes, delete</button>
-<button onClick={()=> setshowdelete(false)} type="submit" className="bg-indigo-600 p-2 font-semibold text-white rounded-lg hover:bg-indigo-700 transition-all " > cancel</button>
+ <button onClick={handeldelete} type="submit" className="bg-indigo-600 p-2 font-semibold text-white rounded-lg hover:bg-indigo-700 transition-all mr-2 ">{t('yes_delete')}</button>
+<button onClick={()=> setshowdelete(false)} type="submit" className="bg-indigo-600 p-2 font-semibold text-white rounded-lg hover:bg-indigo-700 transition-all " >{t('cancel_delete')}</button>
 </div>
 </div>
 

@@ -1,0 +1,18 @@
+{
+
+    "HOME":"Acceuil",
+    "tache":"Tache",
+    "parametre":"parametre",
+    "tache_dujour":" Tache du jour ",
+    "hier":"hier",
+    "demain":"demain",
+    "modifier-task":" modifier la tache",
+    "add-task":"ajouter une tache",
+"modify":"modifier",
+"add":"ajouter",
+"attention":"attention",
+"sure_delete":" es que vous etes sur de supprimer la tache",
+"yes_delete":"supprimer",
+"cancel_delete":"annuler"
+
+}

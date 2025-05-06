@@ -1,0 +1,21 @@
+{
+
+"HOME":"Home",
+"tache":"Task",
+"parametre":"Settings",
+"tache_dujour":"Today's Task's",
+"hier":"yesterday",
+"demain":"tomorrow",
+"modifier-task":"modify the task",
+"add-task":"add a Task",
+"modify":"modify",
+"add":"add",
+"attention":"attention",
+"sure-delete":" are you sure you want to delete",
+"yes-delete":"yes delete",
+"cancel-delete":"cancel"
+
+
+
+
+}
